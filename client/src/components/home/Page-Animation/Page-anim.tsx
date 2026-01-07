@@ -5,61 +5,72 @@ import { useLocation } from 'react-router-dom'
 
 
 
-type props = {
-children : React.ReactNode
+type Props = {
+    children: React.ReactNode
 }
-const PageAnim: React.FC<props> = ({children}) => {
+
+const PageAnim: React.FC<Props> = ({ children }) => {
 
     const currentPath = useLocation().pathname
-    const animRef = useRef(null);
-    const pageRef = useRef(null);
+    const animRef = useRef<HTMLDivElement | null>(null);
+    const pageRef = useRef<HTMLDivElement | null>(null);
 
     useGSAP(() => {
+        if (!animRef.current) return;
+
         const timeline = gsap.timeline();
 
-        timeline.to(animRef.current, {
-            display: "block"
+        timeline.set(animRef.current, {
+            display: 'block'
         })
 
-        timeline.from(".start", {
+        timeline.from('.start', {
             height: 0,
             stagger: {
                 amount: -0.3
             },
         });
 
-        timeline.to(".start", {
-            y: "100%",
+        timeline.to('.start', {
+            y: '100%',
             stagger: {
                 amount: -0.3
             }
         });
 
-        timeline.to(animRef.current, {
-            display: "none"
+        timeline.set(animRef.current, {
+            display: 'none'
         });
 
-        timeline.to(".start", {
-            y: "0%",
+        timeline.to('.start', {
+            y: '0%',
         });
 
-    },[currentPath])
-    
+        if (pageRef.current) {
+            gsap.from(pageRef.current, {
+                opacity: 0,
+                scale: 1.2,
+                delay:1
+            })
+        }
+
+    }, [currentPath])
+
     return (
-       <div>
-         <div ref={animRef} className='h-screen w-full fixed z-20'>
-            <div className='h-full w-full flex'>
-                <div className='start h-full w-1/2 bg-black'></div>
-                <div className='start h-full w-1/2 bg-black'></div>
-                <div className='start h-full w-1/2 bg-black'></div>
-                <div className='start h-full w-1/2 bg-black'></div>
-                <div className='start h-full w-1/2 bg-black'></div>
+        <div>
+            <div ref={animRef} className='h-screen w-full fixed z-30 top-0'>
+                <div className='h-full w-full flex'>
+                    <div className='start h-full w-1/2 bg-black'></div>
+                    <div className='start h-full w-1/2 bg-black'></div>
+                    <div className='start h-full w-1/2 bg-black'></div>
+                    <div className='start h-full w-1/2 bg-black'></div>
+                    <div className='start h-full w-1/2 bg-black'></div>
+                </div>
             </div>
-        </div>
-            <div ref={pageRef} >
+            <div ref={pageRef}>
                 {children}
             </div>
-       </div>
+        </div>
     )
 }
 

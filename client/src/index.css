@@ -9,9 +9,38 @@
   font-family: font-2;
   src: url(../public/fonts/Lausanne-500.woff2);
 }
+
+
 body {
-  background-color: black;
   color: white;
 }
 
+.moveAnim{
+  animation-name: moveAnimation;
+  animation-duration: 10s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
 
+.moveX-hover {
+      opacity: 0;
+      transition: all 0.5s ease;
+}
+
+.link:hover .moveX-hover{
+  opacity: 1;
+}
+
+.Xy:hover .Xz{
+  background-color: black;
+}
+
+@keyframes moveAnimation {
+   from{
+    transform: translateX(0);
+   }
+
+   to{
+    transform: translateX(-100%);
+   }
+}

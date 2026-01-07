@@ -4,14 +4,18 @@ import './index.css'
 import App from './App.tsx'
 import { BrowserRouter } from 'react-router-dom'
 import PageAnim from './components/home/Page-Animation/Page-anim.tsx'
+import NavContext from './context/navContext.tsx'
+
 
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter>
-    <PageAnim>
-    <App />
-    </PageAnim>
+      <PageAnim>
+        <NavContext>
+          <App />
+        </NavContext>
+      </PageAnim>
     </BrowserRouter>
   </StrictMode>,
 )

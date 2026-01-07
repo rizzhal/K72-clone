@@ -3,36 +3,41 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/all";
 import { useRef } from "react"
 
+gsap.registerPlugin(ScrollTrigger);
+
 const Agency = () => {
 
-  gsap.registerPlugin(ScrollTrigger);
-
-  const imgDivRef = useRef(null);
-  const imageRef = useRef<HTMLImageElement | null>(null)
+  const imgDivRef = useRef<HTMLDivElement | null>(null);
+  const imageRef = useRef<HTMLImageElement | null>(null);
 
 
 
   const imgArr = [
-    '../../../public/img1.jpg',
-    '../../../public/img2.jpg',
-    '../../../public/img3.jpg',
-    '../../../public/img4.jpg',
-    '../../../public/img5.jpg',
-    '../../../public/img6.jpg',
-    '../../../public/img7.jpg',
-    '../../../public/img8.jpg',
-    '../../../public/img9.jpg',
-    '../../../public/img10.jpg',
-    '../../../public/img11.jpg',    
+    '/img1.jpg',
+    '/img2.jpg',
+    '/img3.jpg',
+    '/img4.jpg',
+    '/img5.jpg',
+    '/img6.jpg',
+    '/img7.jpg',
+    '/img8.jpg',
+    '/img9.jpg',
+    '/img10.jpg',
+    '/img11.jpg',    
   ]
 
   useGSAP(() => {
     gsap.to(imgDivRef.current, {
       scrollTrigger: {
         trigger: imgDivRef.current,
-        scrub: true,
+        scrub: 1,
         pin: true,
-        start: 'top 25%',
+        pinSpacing:true,
+        pinReparent:true,
+        pinType:'transform',
+        anticipatePin: 1,
+        invalidateOnRefresh : true,
+        start: 'top 5%',
         end: 'top -120%',
         onUpdate: (element) => {
           let imageIndex;
@@ -42,9 +47,7 @@ const Agency = () => {
             imageIndex = imgArr.length - 1
           }
 
-          if(imageRef.current === null){
-            throw new Error("ImageRef is not initialized")
-          }
+          if (!imageRef.current) return;
           imageRef.current.src = imgArr[imageIndex]
 
         }
@@ -52,12 +55,12 @@ const Agency = () => {
     })
   })
   return (
-    <div>
-      <div className="component1">
-        <div ref={imgDivRef} className="h-75 w-57 overflow-hidden rounded-2xl absolute top-[12vw] left-[29.9vw]">
-          <img ref={imageRef} className="h-full w-full object-cover " src="https://k72.ca/images/teamMembers/Carl_480x640.jpg?w=480&h=640&fit=crop&s=f0a84706bc91a6f505e8ad35f520f0b7" alt="" />
+    <div className="text-black">
+      <div className="component1 py-1">
+        <div ref={imgDivRef} className="h-90 w-65 overflow-hidden rounded-2xl absolute top-[35vh] left-[30vw]">
+          <img ref={imageRef} className="h-full w-full object-cover " src='../../../public/img1.jpg' alt="" />
         </div>
-        <div className='font-[font-2]'>
+        <div className='relative font-[font-2]'>
           <div className='mt-[57vh]'>
             <h1 className='text-[20vw] relative leading-[17vw] uppercase text-center '>seven7y
               two
